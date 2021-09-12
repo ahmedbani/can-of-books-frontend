@@ -1,11 +1,34 @@
-# Start your own "Can of Books" App
+# Can of Books App
 
-This repository has starter code to begin work on creating your own online bookshelf.
+**Author**: Ahmed Bani-Salameh
+**Version**: 1.0.0
 
-## What can books do?
+## Overview
+<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
 
-Books are life-changing. They have the power to enlighten, educate, entertain, heal, and help us grow. Build out this code base to create an web app to track what books have impacted you, and what's recommended to read next.
+## Getting Started
 
-## Use this template
+- clone this repo
+- run these commands `npm i`
+- `npm start`
 
-Clone this repo to your own account with the green "Use this template" button. Then, add any collaborators. Now you are ready to start adding features! Deploy your site to let the world know which books have had the greatest impact on you, and what's recommended. Enjoy!
+## Architecture
+<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+
+## Change Log
+
+Name of feature: Authentication
+
+Estimate of time needed to complete: 1 hour
+
+Start time: 1:30 pm 12/sep/2021
+
+Finish time: 3:30 pm 12/sep/2021
+
+Actual time needed to complete: 2 hours
+
+## Credit and Collaborations
+<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+[auth0](https://auth0.com/docs/libraries/auth0-react)
+
+[React-bootstrap](https://react-bootstrap.netlify.app/getting-started/introduction)
