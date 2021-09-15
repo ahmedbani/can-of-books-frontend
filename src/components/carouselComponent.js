@@ -1,6 +1,5 @@
 import React from 'react';
 import {Carousel} from 'react-bootstrap';
-import './carousel.css';
 
 class CarouselCompenent extends React.Component {
     render() { 
@@ -25,6 +24,7 @@ class CarouselCompenent extends React.Component {
                         <p>status: {item.status}</p>
                         <p>email: {item.email}</p>
                       </Carousel.Caption>
+                      {/* add a button to delete with onClick and the method is gonna be in the parent onclick = () =>deleteBook(this.props.item._id)*/}
                     </Carousel.Item>
                     
                   

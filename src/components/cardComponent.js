@@ -12,9 +12,16 @@ class CardComponent extends React.Component {
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
                 <Card.Text>{item.description}</Card.Text>
-                <Card.Text>{item.status}</Card.Text>
-                <Button variant="primary" onClick={()=>this.props.deleteBook(item._id)}>Delete</Button>
               </Card.Body>
+              <Card.Footer>{item.status}</Card.Footer>
+              <Button
+                  variant="primary"
+                  onClick={() => this.props.deleteBook(item._id)}
+                >
+                  Delete
+                </Button>
+                <br/>
+              <Button onClick={()=>this.props.showUpdate(item)}>Update</Button>
             </Card>
           );
         })}

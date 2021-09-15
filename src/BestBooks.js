@@ -1,12 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Jumbotron,  Button } from "react-bootstrap";
+import { Jumbotron, Button } from "react-bootstrap";
 import "./BestBooks.css";
 import { withAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import BookFormModal from './components/bookFormModal';
-import CarouselCompenent from "./components/carouselComponent";
+import BookFormModal from "./components/bookFormModal";
 import CardComponent from "./components/cardComponent";
+import UpdateFormModal from "./components/updateFormModal";
 
 class MyFavoriteBooks extends React.Component {
   constructor(props) {
@@ -14,8 +14,9 @@ class MyFavoriteBooks extends React.Component {
     this.state = {
       bestBooksArr: [],
       booksFlag: false,
-      showFlag:false
-
+      showFlag: false,
+      showUpdate: false,
+      bookToUpdate : {}
     };
   }
 
@@ -37,61 +38,106 @@ class MyFavoriteBooks extends React.Component {
       .catch((err) => console.log("error"));
   };
 
-  addBook = (event) =>{
+  addBook = (event) => {
     event.preventDefault();
     const obj = {
-      title : event.target.title.value,
+      title: event.target.title.value,
       description: event.target.description.value,
       status: event.target.status.value,
       imageURL: event.target.imageURL.value,
-      email : this.props.auth0.user.email,
-    }
+      email: this.props.auth0.user.email,
+    };
     axios
-    .post(`https://can-of-books2.herokuapp.com/books`,obj)
-    .then(result => this.setState({
-      bestBooksArr:result.data
-    })
-    )
-    .catch((err) => console.log("error"));
-  }
+      .post(`https://can-of-books2.herokuapp.com/books`, obj)
+      .then((result) =>
+        this.setState({
+          bestBooksArr: result.data,
+        })
+      )
+      .catch((err) => console.log("error"));
+  };
 
-  deleteBook =(id) =>{
+  deleteBook = (id) => {
     console.log(id);
     const email = this.props.auth0.user.email;
     axios
-    .delete(`https://can-of-books2.herokuapp.com/books/${id}?email=${email}`)
-    .then(result => this.setState({
-      bestBooksArr : result.data
+      .delete(`https://can-of-books2.herokuapp.com/books/${id}?email=${email}`)
+      .then((result) =>
+        this.setState({
+          bestBooksArr: result.data,
+        })
+      )
+      .catch((err) => console.log("error"));
+  };
+
+  updateBook = (event) =>{
+    event.preventDefault();
+    const obj ={
+      title: event.target.title.value,
+      description: event.target.description.value,
+      status: event.target.status.value,
+      imageURL: event.target.imageURL.value,
+      email: this.props.auth0.user.email,
+      bookId: this.state.bookToUpdate._id
+    };
+    axios
+    .put(`http://localhost:3001/books/${this.state.bookToUpdate._id}`,obj)
+    .then(result => {
+      console.log(result.data);
+      this.setState({
+        bestBooksArr:result.data
+      })
     })
-    )
-    .catch((err) => console.log("error"))
+    .catch(err =>{
+      console.log('error updating the book');
+    })
 
   }
-  show=()=> {
+  show = () => {
     this.setState({
       showFlag: true,
     });
-  }
-  handleClose=()=> {
+  };
+  handleClose = () => {
     this.setState({
       showFlag: false,
     });
-  }
+  };
+
+  showUpdate = (item) => {
+    this.setState({
+      showUpdate: true,
+      bookToUpdate: item
+    });
+    
+  };
+  handleCloseUpdate = () => {
+    this.setState({
+      showUpdate: false,
+    });
+  };
 
   render() {
     return (
       <Jumbotron>
-        
         <h1>My Favorite Books</h1>
         <p>This is a collection of my favorite books</p>
-        <Button onClick={ this.show}>Add Book</Button>
-        <BookFormModal addBook={this.addBook}
-        showFlag = {this.state.showFlag}
-        handleClose = {this.handleClose}
+        <Button onClick={this.show}>Add Book</Button>
+        <BookFormModal
+          addBook={this.addBook}
+          showFlag={this.state.showFlag}
+          handleClose={this.handleClose}
         />
-        <CardComponent 
-        bestBooksArr={this.state.bestBooksArr} 
-        deleteBook = {this.deleteBook}
+        <UpdateFormModal
+          showUpdate={this.state.showUpdate}
+          handleCloseUpdate={this.handleCloseUpdate}
+          bookToUpdate = {this.state.bookToUpdate}
+          updateBook = {this.updateBook}
+        />
+        <CardComponent
+          bestBooksArr={this.state.bestBooksArr}
+          deleteBook={this.deleteBook}
+          showUpdate = {this.showUpdate}
         />
       </Jumbotron>
     );
